@@ -1,0 +1,18 @@
+name: Deploy To Azure App Service
+on: [workflow_dispatch]
+env:
+  AZURE_REGION: eastus2
+  RESOURCE_GROUP_NAME: demoignite2022cn
+
+jobs:
+
+  create-azure-rg:
+    runs-on: ubuntu-latest
+    steps:
+    
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - run: |
+        az group create --location ${{ env.AZURE_REGION }} --name ${{ env.RESOURCE_GROUP_NAME }}
