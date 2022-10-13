@@ -21,8 +21,11 @@ jobs:
       with:
         inlineScript: |
           az group create --location ${{ env.AZURE_REGION }} --name ${{ env.RESOURCE_GROUP_NAME }}
+          
   appservice-bicep-template-deploy:
     runs-on: ubuntu-latest
+    if: ${{success()}}
+    needs: create-resource-group
     steps:
 
       # Checkout code
